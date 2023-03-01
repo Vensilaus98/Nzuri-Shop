@@ -1,0 +1,1 @@
+const String cartAppBarTitle = "My cart";
