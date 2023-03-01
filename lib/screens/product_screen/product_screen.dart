@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../providers/products_provider.dart';
 import '../../strings/my_product_strings.dart';
+import '../home_screen/home_screen.dart';
 
 void main() {
   runApp(ProductScreen());
@@ -82,6 +83,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       appBar: AppBar(
           backgroundColor: kBackgroundColor,
           leading: GestureDetector(
+            onTap: (() {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => const MyHomeScreen()));
+            }),
             child: Icon(
               Icons.arrow_back_ios,
               color: kPrimaryColor,

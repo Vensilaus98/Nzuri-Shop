@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../colors/colors.dart';
 import '../../strings/my_cart_strings.dart';
+import '../home_screen/home_screen.dart';
 
 void main() {
   runApp(const MyCartScreen());
@@ -35,7 +36,6 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-
     final myCartProducts = context.watch<ProductProvider>().myProducts;
 
     return SafeArea(
@@ -43,6 +43,12 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
           backgroundColor: kBackgroundColor,
           leading: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MyHomeScreen()));
+            },
             child: Icon(
               Icons.arrow_back_ios,
               color: kPrimaryColor,
@@ -50,7 +56,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           centerTitle: true,
           title: Text(
-            "${cartAppBarTitle}",
+            cartAppBarTitle,
             style: GoogleFonts.robotoSlab(
                 color: kTextColor,
                 fontSize: 14.sp,
@@ -67,7 +73,6 @@ class _CartScreenState extends State<CartScreen> {
             child: ListView.builder(
                 itemCount: myCartProducts.length,
                 itemBuilder: (context, index) {
-                  
                   final product = myCartProducts[index];
 
                   return Padding(
@@ -147,10 +152,17 @@ class _CartScreenState extends State<CartScreen> {
                                   )
                                 ],
                               ),
-                              Icon(
-                                Icons.delete_forever_outlined,
-                                size: 7.w,
-                                color: kPrimaryColor,
+                              GestureDetector(
+                                onTap: (() {
+                                  context
+                                      .read<ProductProvider>()
+                                      .removeFromCart(product);
+                                }),
+                                child: Icon(
+                                  Icons.delete_forever_outlined,
+                                  size: 7.w,
+                                  color: kPrimaryColor,
+                                ),
                               )
                             ],
                           ),

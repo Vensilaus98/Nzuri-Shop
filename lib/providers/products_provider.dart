@@ -3,7 +3,6 @@ import 'package:nzuri_ecommerce_app/services/api_call_service.dart';
 import '../models/product_model.dart';
 
 class ProductProvider with ChangeNotifier {
-
   List<Product> _products = [];
   List<Product> _searchedProducts = [];
 

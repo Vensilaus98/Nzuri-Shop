@@ -40,7 +40,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   //Create search textfiled controller
   final TextEditingController _controller = TextEditingController();
 
@@ -52,8 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    products =
-        Provider.of<ProductProvider>(context, listen: false).getProducts();
+    products = Provider.of<ProductProvider>(context, listen: false).getProducts();
     super.initState();
   }
 
@@ -77,9 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     var myProducts = context.watch<ProductProvider>().myProducts;
-    
+
     return SafeArea(
         child: Scaffold(
       body: Container(
@@ -113,7 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               setState(() {
                                 searchProductsbByName(value);
                               });
-
                               //Open bottom sheet modal with search results
                               showModalBottomSheet<void>(
                                   context: context,
@@ -227,12 +223,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         )
                                                                       ],
                                                                     ),
-                                                                    Icon(
-                                                                      Icons
-                                                                          .shopping_bag_outlined,
-                                                                      size: 7.w,
-                                                                      color:
-                                                                          kPrimaryColor,
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          (() {
+                                                                        if (!myProducts
+                                                                            .contains(snapshot.data![index])) {
+                                                                          context
+                                                                              .read<ProductProvider>()
+                                                                              .addToCart(snapshot.data![index]);
+                                                                        } else {
+                                                                          context
+                                                                              .read<ProductProvider>()
+                                                                              .removeFromCart(snapshot.data![index]);
+                                                                        }
+                                                                      }),
+                                                                      child:
+                                                                          Icon(
+                                                                        myProducts.contains(snapshot.data![index])
+                                                                            ? Icons.delete
+                                                                            : Icons.shopping_bag_outlined,
+                                                                        size:
+                                                                            7.w,
+                                                                        color:
+                                                                            kPrimaryColor,
+                                                                      ),
                                                                     )
                                                                   ],
                                                                 ),
